@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define V 4 
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int tsp(int graph[V][V], int start) {
+    int vertices[V - 1];
+    int min_path = INT_MAX;
+    
+    for (int i = 0, j = 0; i < V; i++) {
+        if (i != start) {
+            vertices[j++] = i;
+        }
+    }
+
+    do {
+        int current_pathweight = 0;
+        
+        current_pathweight += graph[start][vertices[0]];
+        
+        for (int i = 0; i < V - 2; i++) {
+            current_pathweight += graph[vertices[i]][vertices[i + 1]];
+        }
+        
+        current_pathweight += graph[vertices[V - 2]][start];
+        
+        min_path = min(min_path, current_pathweight);
+    } while (next_permutation(vertices));
+
+    return min_path;
+}
+
+int factorial(int n) {
+    return (n <= 1) ? 1 : n * factorial(n - 1);
+}
+
+int next_permutation(int* arr) {
+    int i = V - 2;
+    
+    while (i >= 0 && arr[i] >= arr[i + 1]) {
+        i--;
+    }
+    
+    if (i < 0) {
+        return 0;
+    }
+    
+    int j = V - 1;
+    
+    while (arr[j] <= arr[i]) {
+        j--;
+    }
+    
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+    
+    int left = i + 1;
+    int right = V - 1;
+    
+    while (left < right) {
+        temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+        left++;
+        right--;
+    }
+    
+    return 1;
+}
+
+int main() {
+    int graph[V][V] = {
+        {0, 10, 15, 20},
+        {10, 0, 35, 25},
+        {15, 35, 0, 30},
+        {20, 25, 30, 0}
+    };
+
+    int start = 0; 
+
+    int min_path = tsp(graph, start);
+    printf("Minimum cost for Hamiltonian cycle: %d\n", min_path);
+
+    return 0;
+}
+OUTPUT:
+Minimum cost for Hamiltonian cycle: 30
