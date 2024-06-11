@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool isValidString(const char *str) {
+    // Check for NULL pointer
+    if (str == NULL) {
+        return false;
+    }
+
+    if (strlen(str) == 0) {
+        return false;
+    }
+
+    return true;
+}
+
+int main() {
+    const char *str = "Hello, world!";
+
+    if (isValidString(str)) {
+        printf("The string \"%s\" is valid.\n", str);
+    } else {
+        printf("The string \"%s\" is not valid.\n", str);
+    }
+
+    return 0;
+}
+OUTPUT:
+The string "Hello, world!" is valid.
