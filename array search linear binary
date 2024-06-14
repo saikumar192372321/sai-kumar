@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+int linearSearch(int arr[], int size, int key) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == key) {
+            return i; 
+        }
+    }
+    return -1; 
+}
+
+int binarySearch(int arr[], int size, int key) {
+    int low = 0;
+    int high = size - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid] == key) {
+            return mid; 
+        } else if (arr[mid] < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1; 
+}
+
+int main() {
+    int arr[] = {2, 3, 4, 10, 40};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int key = 10;
+
+    int linearIndex = linearSearch(arr, size, key);
+    if (linearIndex != -1) {
+        printf("Element %d found at index %d using linear search.\n", key, linearIndex);
+    } else {
+        printf("Element %d not found using linear search.\n", key);
+    }
+
+    int sortedArr[] = {2, 3, 4, 10, 40};
+    int sortedSize = sizeof(sortedArr) / sizeof(sortedArr[0]);
+    int sortedKey = 10;
+
+    int binaryIndex = binarySearch(sortedArr, sortedSize, sortedKey);
+    if (binaryIndex != -1) {
+        printf("Element %d found at index %d using binary search.\n", sortedKey, binaryIndex);
+    } else {
+        printf("Element %d not found using binary search.\n", sortedKey);
+    }
+
+    return 0;
+}
+
+OUTPUT:
+Element 10 found at index 3 using linear search.
+Element 10 found at index 3 using binary search
