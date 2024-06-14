@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+void bubbleSortAscending(int arr[], int n) {
+    int i, j;
+    for (i = 0; i < n-1; i++) {
+        for (j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(&arr[j], &arr[j+1]);
+            }
+        }
+    }
+}
+
+void bubbleSortDescending(int arr[], int n) {
+    int i, j;
+    for (i = 0; i < n-1; i++) {
+        for (j = 0; j < n-i-1; j++) {
+            if (arr[j] < arr[j+1]) {
+                swap(&arr[j], &arr[j+1]);
+            }
+        }
+    }
+}
+
+void printArray(int arr[], int size) {
+    int i;
+    for (i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr)/sizeof(arr[0]);
+
+    printf("Original array: ");
+    printArray(arr, n);
+
+    printf("Array sorted in ascending order: ");
+    bubbleSortAscending(arr, n);
+    printArray(arr, n);
+
+    printf("Array sorted in descending order: ");
+    bubbleSortDescending(arr, n);
+    printArray(arr, n);
+
+    return 0;
+}
+OUTPUT:
+Original array: 64 34 25 12 22 11 90 
+Array sorted in ascending order: 11 12 22 25 34 64 90 
+Array sorted in descending order: 90 64 34 25 22 12 11 
+
+
