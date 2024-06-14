@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_NODES 100
+
+int graph[MAX_NODES][MAX_NODES];
+bool visited[MAX_NODES];
+int path[MAX_NODES];
+int path_index = 0;
+
+bool dfs(int start, int end, int num_nodes) {
+    visited[start] = true;
+    path[path_index++] = start;
+
+    if (start == end) {
+        for (int i = 0; i < path_index; i++) {
+            printf("%d ", path[i]);
+        }
+        printf("\n");
+        return true;
+    }
+
+    for (int i = 0; i < num_nodes; i++) {
+        if (graph[start][i] && !visited[i]) {
+            if (dfs(i, end, num_nodes)) {
+                return true;
+            }
+        }
+    }
+
+    path_index--;
+    visited[start] = false;
+    return false;
+}
+
+int main() {
+    int num_nodes, num_edges;
+    printf("Enter number of nodes and edges: ");
+    scanf("%d %d", &num_nodes, &num_edges);
+
+    
+    for (int i = 0; i < num_nodes; i++) {
+        visited[i] = false;
+        for (int j = 0; j < num_nodes; j++) {
+            graph[i][j] = 0;
+        }
+    }
+
+
+    printf("Enter edges (format: u v):\n");
+    for (int i = 0; i < num_edges; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        graph[u][v] = graph[v][u] = 1;
+    }
+
+    int start, end;
+    printf("Enter start and end node: ");
+    scanf("%d %d", &start, &end);
+
+    printf("Valid paths from %d to %d:\n", start, end);
+    dfs(start, end, num_nodes);
+
+    return 0;
+}
+OUTPUT:
+/tmp/QstNNM5UgR.o
+Enter number of nodes and edges: 6 7
+Enter edges (format: u v):
+42
