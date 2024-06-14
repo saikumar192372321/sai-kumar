@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_NODES 100
+
+int graph[MAX_NODES][MAX_NODES];
+bool visited[MAX_NODES];
+
+void dfs(int node, int num_nodes) {
+    visited[node] = true;
+    
+    for (int i = 0; i < num_nodes; i++) {
+        if (graph[node][i] && !visited[i]) {
+            dfs(i, num_nodes);
+        }
+    }
+}
+
+int minEdges(int num_nodes) {
+    int count = 0;
+    for (int i = 0; i < num_nodes; i++) {
+        if (!visited[i]) {
+            dfs(i, num_nodes);
+            count++;
+        }
+    }
+    return count - 1; 
+
+int main() {
+    int num_nodes, num_edges;
+    printf("Enter number of nodes and edges: ");
+    scanf("%d %d", &num_nodes, &num_edges);
+
+    for (int i = 0; i < num_nodes; i++) {
+        visited[i] = false;
+        for (int j = 0; j < num_nodes; j++) {
+            graph[i][j] = 0;
+        }
+    }
+
+    printf("Enter edges (format: u v):\n");
+    for (int i = 0; i < num_edges; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        graph[u][v] = graph[v][u] = 1; 
+    }
+
+    printf("Adjacency Matrix:\n");
+    for (int i = 0; i < num_nodes; i++) {
+        for (int j = 0; j < num_nodes; j++) {
+            printf("%d ", graph[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("Minimum edges needed to traverse all nodes: %d\n", minEdges(num_nodes));
+
+    return 0;
+}
+
+OUTPUT:
+Enter number of nodes and edges: 6
+6
+Enter edges (format: u v):
+36
